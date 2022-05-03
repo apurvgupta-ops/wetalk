@@ -6,6 +6,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import SearchIcon from "@mui/icons-material/Search";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import SettingsVoiceIcon from "@mui/icons-material/SettingsVoice";
+import SendIcon from "@mui/icons-material/Send";
 
 export const Chat = () => {
   const [input, setInput] = useState("");
@@ -17,7 +18,7 @@ export const Chat = () => {
 
   const submitMsg = (e) => {
     e.preventDefault();
-    console.log("data send")
+    console.log("data send");
     // console.log({input})
   };
 
@@ -64,10 +65,10 @@ export const Chat = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
           />
+          <button type="submit" onClick={submitMsg}>
+            <SendIcon />
+          </button>
         </form>
-        <button type="submit" onClick={submitMsg}>
-          Send a message
-        </button>
         <SettingsVoiceIcon />
       </div>
     </div>
