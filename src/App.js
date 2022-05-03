@@ -1,9 +1,19 @@
-import React from 'react'
+import React from "react";
+import { Sidebar } from "./Components/Sidebar/Sidebar";
+
+import "./App.css";
+import { Chat } from "./Components/Chat/Chat";
 
 const App = () => {
   return (
-    <div className='w-full h-screen flex justify-center bg-black text-yellow-500'>Helo</div>
-  )
-}
+    <div className="app">
+      
+      <div className="app_body">
+        <Sidebar/>
+        <Chat/>
+      </div>
+    </div>
+  );
+};
 
-export default App
+export default App;
