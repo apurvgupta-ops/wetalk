@@ -5,27 +5,15 @@ import DonutLarge from "@mui/icons-material/DonutLarge";
 import { MoreVert } from "@mui/icons-material";
 import { Chat } from "@mui/icons-material";
 import { SearchOutlined } from "@mui/icons-material";
-
 import styles from "./Sidebar.module.css";
 import { SidebarChat } from "../Sidebar Chat/SidebarChat";
-import db from "../../api/Firebase";
-import { collection,getDocs } from "firebase/firestore";
+import { fetchingData } from "../../api/firebaseEndpoints";
 
 export const Sidebar = () => {
   const [chats, setChats] = useState([]);
   // console.log(chats)
   useEffect(() => {
-    const colRef = collection(db, "room");
-    //get collection data
-    getDocs(colRef).then((snapshot) => {
-      setChats(
-        snapshot.docs.map((doc) => ({
-          id: doc.id,
-          data: doc.data(),
-        }))
-      );
-      console.log(snapshot.docs);
-    });
+    fetchingData({ setChats });
   }, []);
 
   return (
@@ -53,10 +41,10 @@ export const Sidebar = () => {
 
       <div className={styles.sidebar_chats}>
         <SidebarChat addNewChat />
-        {chats.map((chat, index) =>
+        {chats.map((chat, index) => (
           // console.log(chat.data)
           <SidebarChat key={index} id={chat.id} name={chat.data} />
-        )}
+        ))}
       </div>
     </div>
   );

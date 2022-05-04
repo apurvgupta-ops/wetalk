@@ -1,5 +1,8 @@
 import { Avatar } from "@mui/material";
+import { addDoc, collection } from "firebase/firestore";
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import db from "../../api/Firebase";
 
 import styles from "./SidebarChat.module.css";
 
@@ -14,9 +17,15 @@ export const SidebarChat = ({ addNewChat, id, name }) => {
 
   const createChat = () => {
     const Chat = prompt("Enter the Chat Name");
+    if (Chat) {
+      addDoc(collection(db, "room"), {
+        data: Chat,
+      });
+    }
   };
 
   return !addNewChat ? (
+    <Link to={`/chat/${id}`}>
     <div className={styles.sidebarChats}>
       <Avatar src={`https://avatars.dicebear.com/api/human/${logo}a23.svg`} />
       <div className={styles.sidebar_Chat_info}>
@@ -24,6 +33,7 @@ export const SidebarChat = ({ addNewChat, id, name }) => {
         <p>this is a message</p>
       </div>
     </div>
+    </Link>
   ) : (
     <div className={styles.sidebarChats} onClick={createChat}>
       <h3>Add New Chat</h3>
