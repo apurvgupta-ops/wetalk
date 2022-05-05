@@ -37,8 +37,9 @@ export const Chat = () => {
   const submitMsg = (e) => {
     e.preventDefault();
     console.log("data send :", input);
+
     setInput("");
-    // console.log({input})
+    // console.log({input})j
   };
 
   return (

@@ -1,4 +1,4 @@
-import { collection, getDocs, getDoc, doc} from "firebase/firestore";
+import { collection, getDocs, getDoc, doc } from "firebase/firestore";
 import db from "./Firebase";
 
 const colRef = collection(db, "room");
