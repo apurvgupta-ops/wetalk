@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
-import {  signInWithPopup } from "firebase/auth";
+// import {  signInWithPopup } from "firebase/auth";
+
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, provider } from "../../api/Firebase";
@@ -9,20 +10,20 @@ import { useStateValue } from "../redux/Stateprovider";
 import styles from "./Login.module.css";
 export const Login = () => {
     // const navigate  = useNavigate()
-  // const [dispatch] = useStateValue();
+  const [{},dispatch] = useStateValue();
   const signIn = () => {
-    signInWithPopup(auth, provider)
+    auth.signInWithPopup(provider)
       .then((res) => {
           console.log(res)
-          // navigate('/chat')
-        // dispatch({
-        //   type: actionTypes.SET_USER,
-        //   user: res.user,
-        // });
+          dispatch({
+            type:actionTypes.SET_USER,
+            user: res.user
+          })
       })
       .catch((error) => {
         // Handle Errors here.
         console.log(error);
+        alert(error.message)
       });
   };
 

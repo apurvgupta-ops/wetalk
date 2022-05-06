@@ -8,12 +8,12 @@ import { Login } from "./Components/Login/Login";
 import { useStateValue } from "./Components/redux/Stateprovider";
 
 const App = () => {
-  const [user, setUser] = useState();
-  // const [{ user }, dispatch] = useStateValue();
+  // const [user, setUser] = useState();
+  const [{ user }, dispatch] = useStateValue();
 
   return (
     <div className="app">
-      {user ? (
+      {!user ? (
         <Login />
       ) : (
         <div className="app_body">

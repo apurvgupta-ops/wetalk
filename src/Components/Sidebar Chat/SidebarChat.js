@@ -1,5 +1,4 @@
 import { Avatar } from "@mui/material";
-import { addDoc, collection } from "firebase/firestore";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import db from "../../api/Firebase";
@@ -18,21 +17,21 @@ export const SidebarChat = ({ addNewChat, id, name }) => {
   const createChat = () => {
     const Chat = prompt("Enter the Chat Name");
     if (Chat) {
-      addDoc(collection(db, "room"), {
-        data: Chat,
+      db.collection("room").add({
+        name: Chat,
       });
     }
   };
 
   return !addNewChat ? (
     <Link to={`/chat/${id}`}>
-    <div className={styles.sidebarChats}>
-      <Avatar src={`https://avatars.dicebear.com/api/human/${logo}a23.svg`} />
-      <div className={styles.sidebar_Chat_info}>
-        <h2>{Object.values(name)}</h2>
-        <p>this is a message</p>
+      <div className={styles.sidebarChats}>
+        <Avatar src={`https://avatars.dicebear.com/api/human/${logo}a23.svg`} />
+        <div className={styles.sidebar_Chat_info}>
+          <h2>{Object.values(name)}</h2>
+          <p>this is a message</p>
+        </div>
       </div>
-    </div>
     </Link>
   ) : (
     <div className={styles.sidebarChats} onClick={createChat}>
