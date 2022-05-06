@@ -7,13 +7,25 @@ import { Chat } from "@mui/icons-material";
 import { SearchOutlined } from "@mui/icons-material";
 import styles from "./Sidebar.module.css";
 import { SidebarChat } from "../Sidebar Chat/SidebarChat";
-import { fetchingData } from "../../api/firebaseEndpoints";
+import db from "../../api/Firebase";
+// import { fetchingData } from "../../api/firebaseEndpoints";
 
 export const Sidebar = () => {
   const [chats, setChats] = useState([]);
   // console.log(chats)
   useEffect(() => {
-    fetchingData({ setChats });
+    // fetchingData({ setChats });
+    const unsubscribe = db.collection("room").onSnapshot((snap) =>
+      setChats(
+        snap.docs.map((doc) => ({
+          id: doc.id,
+          data: doc.data(),
+        }))
+      )
+    );
+    return () => {
+      unsubscribe();
+    }; 
   }, []);
 
   return (
