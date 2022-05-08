@@ -7,7 +7,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import SettingsVoiceIcon from "@mui/icons-material/SettingsVoice";
 import SendIcon from "@mui/icons-material/Send";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import db from "../../api/Firebase";
 import firebase from "firebase";
 import { useStateValue } from "../redux/Stateprovider";
@@ -19,17 +19,18 @@ export const Chat = () => {
   const [message, setMessage] = useState([]);
   const { chatId } = useParams();
 
-  const [{ user }, dispatch] = useStateValue();
+  const [{ user }] = useStateValue();
   // console.log(chatName)
 
   useEffect(() => {
     if (chatId) {
-      console.log({chatId});
+      console.log({ chatId });
       //for version less then 8
       db.collection("room")
         .doc(chatId)
         .onSnapshot((snapshot) => setChatName(snapshot.data().name));
 
+      //Get the chat from db according to the chatId
       db.collection("room")
         .doc(chatId)
         .collection("message")
@@ -63,7 +64,12 @@ export const Chat = () => {
         <Avatar src={`https://avatars.dicebear.com/api/human/${logo}a23.svg`} />
         <div className={styles.chatHeader_info}>
           <h2>{chatName}</h2>
-          <p>Last Seen...</p>
+          <p>
+            Last Seen
+            {new Date(
+              message[message.length - 1]?.timestamp?.toDate()
+            ).toUTCString()}
+          </p>
         </div>
 
         <div className={styles.chatHeader_right}>
@@ -83,13 +89,14 @@ export const Chat = () => {
         {message?.map((msg) => (
           <p
             className={`${styles.chatMessage} ${
-              true && styles.chatMessageReceiver
-            }`}
+              msg.name === user.displayName && styles.chatMessageReceiver
+            }
+            `}
           >
             <span className={styles.chatSenderName}>{msg.name}</span>
             {msg.message}
             <span className={styles.chatTimestamp}>
-              {new Date(message.timestamp?.toDate()).toUTCString()}
+              {new Date(msg.timestamp?.toDate()).toUTCString()}
             </span>
           </p>
         ))}

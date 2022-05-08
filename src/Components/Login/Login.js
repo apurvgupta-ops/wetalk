@@ -2,7 +2,6 @@ import { Button } from "@mui/material";
 // import {  signInWithPopup } from "firebase/auth";
 
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { auth, provider } from "../../api/Firebase";
 import { actionTypes } from "../redux/reducer";
 import { useStateValue } from "../redux/Stateprovider";

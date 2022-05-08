@@ -15,6 +15,8 @@ export const Sidebar = () => {
   // console.log(chats)
   useEffect(() => {
     // fetchingData({ setChats });
+    
+    //get the chatName from the database
     const unsubscribe = db.collection("room").onSnapshot((snap) =>
       setChats(
         snap.docs.map((doc) => ({
@@ -47,7 +49,7 @@ export const Sidebar = () => {
       <div className={styles.sidebar_search}>
         <div className={styles.sidebar_searchContainer}>
           <SearchOutlined />
-          <input placeholder="Search or start the new chat" type="text" />
+          <input placeholder="Search user" type="text" />
         </div>
       </div>
 
