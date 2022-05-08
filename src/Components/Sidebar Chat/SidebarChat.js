@@ -10,7 +10,7 @@ export const SidebarChat = ({ addNewChat, id, name }) => {
 
   const [logo, setLogo] = useState("");
   const [message, setMessage] = useState("");
-  console.log(message);
+  // console.log(message);
 
   useEffect(() => {
     setLogo(Math.floor(Math.random() * 5000));
@@ -25,7 +25,7 @@ export const SidebarChat = ({ addNewChat, id, name }) => {
         .orderBy("timestamp", "desc")
         .onSnapshot((snap) => setMessage(snap.docs.map((doc) => doc.data())));
     }
-  }, []);
+  }, [id]);
 
   const createChat = () => {
     const Chat = prompt("Enter the Chat Name");

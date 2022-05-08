@@ -16,3 +16,8 @@
 .sidebar_Chat_info{
     margin-left: 10px;
 }
+
+a{
+    text-decoration: none !important;
+    color: black;
+}
