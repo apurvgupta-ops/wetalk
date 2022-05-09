@@ -1,7 +1,6 @@
 import firebase, { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-
+import {getAuth, GoogleAuthProvider} from 'firebase/auth'
 const firebaseConfig = {
   apiKey: "AIzaSyDUXTtDpdf808JsX2MbKcZ_G9WKTMJovho",
   authDomain: "wetalk-2c171.firebaseapp.com",
@@ -11,51 +10,8 @@ const firebaseConfig = {
   appId: "1:587669479921:web:0ca45d0f3b0aa9cdd0a450",
 };
 
-//init Firebase App
-const firebaseapp = firebase.initializeApp(firebaseConfig);
-// initializeApp(firebaseConfig);
-
-//init Service
-const db = firebase.firestore();
-
-//collection Ref
-// const colRef = collection(db, 'room')
-
-//get collection data
-// getDocs(colRef). then((snapshot)=>{
-//   console.log(snapshot.docs)
-// })
-
-const auth = firebase.auth();
-const provider = new firebase.auth.GoogleAuthProvider();
-
-export { auth, provider };
-export default db;
-
-// Ways
-// new way of getting the data from firebase
-// const docRef = doc(db, "room" );
-// const docSnap = getDocs(docRef);
-// if (docSnap.exists()) {
-//   console.log("Doc exists", docSnap.data());
-// } else {
-//   console.log("No doc found");
-// }
-
-// const q = query(collection(db,'room'))
-// const querySnapshot = getDocs(q)
-// querySnapshot.forEach((doc)=>{
-//   console.log(doc.id,"=>", doc.data())
-// })
-
-// Get Data from the firebase
-// useEffect(() => {
-//   db.collection("room").onSnapshot((snapshot) =>
-//     setChats(
-//       snapshot.docs.map((doc) => ({
-//         id: doc.id,
-//         data: doc.data(),
-//       }))
-//     )
-//   );
-// }, []);
+// Firebase 9
+export const app = initializeApp(firebaseConfig)
+export const database = getFirestore(app)
+export const auth = getAuth()
+export const provider = new GoogleAuthProvider()

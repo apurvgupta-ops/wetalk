@@ -1,7 +1,8 @@
 import { Avatar } from "@mui/material";
+import { addDoc, collection, getDocs, orderBy } from "firebase/firestore";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import db from "../../api/Firebase";
+import db, { database } from "../../api/Firebase";
 
 import styles from "./SidebarChat.module.css";
 
@@ -17,13 +18,22 @@ export const SidebarChat = ({ addNewChat, id, name }) => {
   }, []);
 
   //Set the latest msg in the user
+  // useEffect(() => {
+  //   if (id) {
+  //     db.collection("room")
+  //       .doc(id)
+  //       .collection("message")
+  //       .orderBy("timestamp", "desc")
+  //       .onSnapshot((snap) => setMessage(snap.docs.map((doc) => doc.data())));
+  //   }
+  // }, [id]);
+
+  //Firebase 9
   useEffect(() => {
     if (id) {
-      db.collection("room")
-        .doc(id)
-        .collection("message")
-        .orderBy("timestamp", "desc")
-        .onSnapshot((snap) => setMessage(snap.docs.map((doc) => doc.data())));
+      getDocs(collection(database, "room", id, "message"), orderBy("timestamp", "desc")).then((res) =>
+        setMessage(res.docs.map((doc) => doc.data()))
+      );
     }
   }, [id]);
 
@@ -31,8 +41,16 @@ export const SidebarChat = ({ addNewChat, id, name }) => {
     const Chat = prompt("Enter the Chat Name");
 
     // add the new chat in the database
+    // if (Chat) {
+    //   db.collection("room").add({
+    //     name: Chat,
+    //   });
+    // }
+
+    //Firebase 9
+    const addDocRef = collection(database, "room");
     if (Chat) {
-      db.collection("room").add({
+      addDoc(addDocRef, {
         name: Chat,
       });
     }

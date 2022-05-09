@@ -1,4 +1,5 @@
 import { Button } from "@mui/material";
+import { signInWithPopup } from "firebase/auth";
 // import {  signInWithPopup } from "firebase/auth";
 
 import React from "react";
@@ -6,12 +7,13 @@ import { auth, provider } from "../../api/Firebase";
 import { actionTypes } from "../redux/reducer";
 import { useStateValue } from "../redux/Stateprovider";
 
+
 import styles from "./Login.module.css";
 export const Login = () => {
     // const navigate  = useNavigate()
   const [{},dispatch] = useStateValue();
   const signIn = () => {
-    auth.signInWithPopup(provider)
+    signInWithPopup(auth,provider)
       .then((res) => {
           console.log(res)
           dispatch({
