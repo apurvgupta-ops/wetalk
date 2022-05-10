@@ -10,17 +10,26 @@ import SendIcon from "@mui/icons-material/Send";
 import { useParams } from "react-router-dom";
 import { database } from "../../api/Firebase";
 import { useStateValue } from "../redux/Stateprovider";
-import { collection, getDocs, doc, orderBy, addDoc, onSnapshot, FieldValue, Timestamp } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  doc,
+  orderBy,
+  addDoc,
+  onSnapshot,
+  FieldValue,
+  Timestamp,
+} from "firebase/firestore";
 
 export const Chat = () => {
   const [logo, setLogo] = useState("");
   const [input, setInput] = useState("");
   const [chatName, setChatName] = useState("");
   const [message, setMessage] = useState([]);
-  const [reload, setReload] = useState(false)
+  const [reload, setReload] = useState(false);
   const { chatId } = useParams();
-  console.log(message)
-
+  console.log(message);
+  console.log(chatId);
   // console.log(chatName);
 
   const [{ user }] = useStateValue();
@@ -49,7 +58,10 @@ export const Chat = () => {
       //   setChatName(res.data().name);
       // });
 
-      getDocs(collection(database, "room", chatId, "message"), orderBy("timestamp", "asc")).then((res) => {
+      getDocs(
+        collection(database, "room", chatId, "message"),
+        orderBy("timestamp", "asc")
+      ).then((res) => {
         setMessage(res.docs.map((doc) => doc.data()));
       });
     }
@@ -62,7 +74,6 @@ export const Chat = () => {
   const submitMsg = (e) => {
     e.preventDefault();
     console.log("data send :", input);
-    
 
     //addDoc in the Firebase
     // db.collection("room").doc(chatId).collection("message").add({
@@ -74,10 +85,9 @@ export const Chat = () => {
     addDoc(collection(database, "room", chatId, "message"), {
       message: input,
       name: user.displayName,
-      timestamp: Timestamp.now()
-
+      timestamp: Timestamp.now(),
     });
-    setReload(!reload)
+    setReload(!reload);
 
     setInput("");
     // console.log({input})
@@ -111,7 +121,7 @@ export const Chat = () => {
       </div>
 
       <div className={styles.chatBox}>
-        {message?.map((msg) => (
+        {message?.map((msg, index) => (
           <p
             className={`${styles.chatMessage} ${
               msg.name === user.displayName && styles.chatMessageReceiver
@@ -120,7 +130,7 @@ export const Chat = () => {
           >
             <span className={styles.chatSenderName}>{msg.name}</span>
             {msg.message}
-            <span className={styles.chatTimestamp}>
+            <span className={styles.chatTimestamp} key={index}>
               {new Date(msg.timestamp?.toDate()).toUTCString()}
             </span>
           </p>
