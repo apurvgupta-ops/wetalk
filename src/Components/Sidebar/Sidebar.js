@@ -9,6 +9,9 @@ import styles from "./Sidebar.module.css";
 import { SidebarChat } from "../Sidebar Chat/SidebarChat";
 import { database } from "../../api/Firebase";
 import { collection, getDocs } from "firebase/firestore";
+import {toast} from 'react-toastify'
+// toast.configure();
+
 
 export const Sidebar = () => {
   const [chats, setChats] = useState([]);
@@ -29,6 +32,10 @@ export const Sidebar = () => {
   //   };
   // }, []);
 
+  // const notify = () => {
+  //   toast("hi Anonymous");
+  // };
+
   //Firebase 9
   const collectionRef = collection(database, "room");
   useEffect(() => {
@@ -45,7 +52,8 @@ export const Sidebar = () => {
   return (
     <div className={styles.sidebar}>
       <div className={styles.sidebar_header}>
-        <Avatar />
+        <Avatar src={`https://avatars.dicebear.com/api/human/a23.svg`} />
+
         <div className={styles.sidebar_headerRight}>
           <IconButton>
             <DonutLarge />
@@ -53,7 +61,7 @@ export const Sidebar = () => {
           <IconButton>
             <Chat />
           </IconButton>
-          <IconButton> 
+          <IconButton>
             <MoreVert />
           </IconButton>
         </div>
@@ -64,6 +72,10 @@ export const Sidebar = () => {
           <input placeholder="Search user" type="text" />
         </div>
       </div>
+      {/* <div onClick={notify}>Notification</div> */}
+      {/* setTimeout(function notify()) {
+        toast("hiii ")
+      }, 1000) */}
 
       <div className={styles.sidebar_chats}>
         <SidebarChat addNewChat />

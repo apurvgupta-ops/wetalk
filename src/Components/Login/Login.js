@@ -14,11 +14,11 @@ import { useStateValue } from "../redux/Stateprovider";
 import styles from "./Login.module.css";
 export const Login = () => {
   // const navigate  = useNavigate()
-  const [{ }, dispatch] = useStateValue();
+  const [{}, dispatch] = useStateValue();
   const signIn = () => {
     signInAnonymously(auth, provider)
       .then((res) => {
-        console.log(res);
+        console.log(res)
         dispatch({
           type: actionTypes.SET_USER,
           user: res.user,
@@ -34,7 +34,7 @@ export const Login = () => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       const uid = user.uid;
-      console.log(uid)
+      console.log(uid);
     }
   });
 
@@ -42,7 +42,7 @@ export const Login = () => {
     <div className={styles.login}>
       <div className={styles.login_container}>
         <div className={styles.login_text}>
-          <h1> Hii Anonymous User</h1>
+          <h1> Hi Anonymous User</h1>
         </div>
 
         <Button onClick={signIn}>Sign in Anonymously</Button>

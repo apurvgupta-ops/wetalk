@@ -18,6 +18,7 @@ import {
   addDoc,
   onSnapshot,
   FieldValue,
+  getDoc,
   Timestamp,
 } from "firebase/firestore";
 
@@ -54,10 +55,9 @@ export const Chat = () => {
 
   useEffect(() => {
     if (chatId) {
-      // getDocs(collection(database, "room")).then((res) => {
-      //   setChatName(res.data().name);
-      // });
-
+      getDoc(doc(database, "room",chatId)).then((res) =>
+        setChatName(res.data().name)
+      );
       getDocs(
         collection(database, "room", chatId, "message"),
         orderBy("timestamp", "asc")
